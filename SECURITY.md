@@ -7,7 +7,7 @@
 
 ## Secret Management
 - **Environment Variables**: Sensitive data (DB URIs, API Keys) are injected via Kubernetes Secrets.
-- **Storage**: Secrets are stored in `k8s/secrets.yaml` (base64 encoded). **DO NOT COMMIT REAL SECRETS TO GIT.**
+- **Storage**: Secrets are stored in `k8s/restauranty-secrets.yaml` (base64 encoded). **DO NOT COMMIT REAL SECRETS TO GIT.**
 - **CI/CD**: Secrets for the pipeline (Docker Hub credentials) are stored in GitHub Secrets.
 
 ## Authentication & Authorization
