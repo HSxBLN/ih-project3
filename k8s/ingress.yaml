@@ -1,0 +1,38 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: restauranty-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: restauranty.hauke.az.diogohack.shop
+    http:
+      paths:
+      - path: /api/auth
+        pathType: Prefix
+        backend:
+          service:
+            name: auth-service
+            port:
+              number: 3001
+      - path: /api/discounts
+        pathType: Prefix
+        backend:
+          service:
+            name: discounts-service
+            port:
+              number: 3002
+      - path: /api/items
+        pathType: Prefix
+        backend:
+          service:
+            name: items-service
+            port:
+              number: 3003
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend-service
+            port:
+              number: 80

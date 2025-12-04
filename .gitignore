@@ -1,0 +1,26 @@
+.kube/
+kubeconfig*
+*.kubeconfig
+*.pem
+*.key
+*.crt
+*.csr
+
+# ===== ENVIRONMENT FILES =====
+# Alle .env Varianten
+.env
+.env.*
+!.env.example
+.env.local
+.env.development
+.env.production
+.env.test
+*-secrets.yaml
+secret*.yaml
+*.secret.yaml
+secrets/
+k8s/secrets/
+kubernetes/secrets/
+*-local.yaml
+generated-*.yaml
+applied-secrets.yaml
