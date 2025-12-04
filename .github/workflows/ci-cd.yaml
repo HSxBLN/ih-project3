@@ -72,12 +72,12 @@ jobs:
           name: restauranty-secrets
         type: Opaque
         data:
-          mongodb-uri: ${{ secrets.MONGODB_URI_BASE64 }}
-          auth-secret: ${{ secrets.AUTH_SECRET_BASE64 }}
-          cloud-name: ${{ secrets.CLOUD_NAME_BASE64 }}
-          cloud-api-key: ${{ secrets.CLOUD_API_KEY_BASE64 }}
-          cloud-api-secret: ${{ secrets.CLOUD_API_SECRET_BASE64 }}
-          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME_BASE64 }}
+          MONGODB_URI: ${{ secrets.MONGODB_URI_BASE64 }}
+          SECRET: ${{ secrets.SECRET_BASE64 }}
+          CLOUD_NAME: ${{ secrets.CLOUD_NAME_BASE64 }}
+          CLOUD_API_KEY: ${{ secrets.CLOUD_API_KEY_BASE64 }}
+          CLOUD_API_SECRET: ${{ secrets.CLOUD_API_SECRET_BASE64 }}
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME_BASE64 }}
           REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL_BASE64 }}
         EOF
 
