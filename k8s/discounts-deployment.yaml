@@ -20,25 +20,6 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 3002
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 3002
-          initialDelaySeconds: 30
-          periodSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 3002
-          initialDelaySeconds: 5
-          periodSeconds: 5
         env:
         - name: PORT
           value: "3002"
@@ -67,3 +48,5 @@ spec:
             secretKeyRef:
               name: restauranty-secrets
               key: SECRET
+        livenessProbe: null
+        readinessProbe: null
