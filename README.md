@@ -24,7 +24,7 @@ Each service has a `Dockerfile`.
 - `client`: Multi-stage build (Node.js build -> Nginx serve).
 
 ## Kubernetes Deployment
-1.  **Secrets**: Update `k8s/secrets.yaml` with your base64 encoded secrets.
+1.  **Secrets**: Update `k8s/restauranty-secrets.yaml` with your base64 encoded secrets.
 2.  **Deploy**:
     ```bash
     kubectl apply -f k8s/secrets.yaml
@@ -35,8 +35,21 @@ Each service has a `Dockerfile`.
 
 ## AWS EKS Deployment
 The CI/CD pipeline (`.github/workflows/ci-cd.yaml`) is configured to deploy to AWS EKS.
-- **Prerequisites**: Set the following GitHub Secrets: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `EKS_CLUSTER_NAME`.
-- **Workflow**: On push to `main`, images are built, pushed to Docker Hub, and manifests are applied to the EKS cluster.
+- **Prerequisites**: Set the following GitHub Secrets:
+    - **AWS Credentials**: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `EKS_CLUSTER_NAME`.
+    - **Docker Hub**: `DOCKERHUB_USERNAME`, `DOCKERHUB_TOKEN`.
+    - **Base64 Encoded Secrets** (for K8s):
+        - `MONGODB_URI_BASE64`
+        - `AUTH_SECRET_BASE64`
+        - `CLOUD_NAME_BASE64`
+        - `CLOUD_API_KEY_BASE64`
+        - `CLOUD_API_SECRET_BASE64`
+        - `DOCKERHUB_USERNAME_BASE64`
+        - `REACT_APP_SERVER_URL_BASE64`
+    - **Plain Text**:
+        - `REACT_APP_SERVER_URL` (for Client Docker build)
+        - `NAMESPACE` (e.g., `default`)
+- **Workflow**: On push to `main`, images are built (with build args), pushed to Docker Hub, secrets are generated, and manifests are applied to the EKS cluster.
 
 ## CI/CD
 GitHub Actions workflow (`.github/workflows/ci-cd.yaml`) handles:

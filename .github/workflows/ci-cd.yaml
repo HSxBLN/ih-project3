@@ -44,6 +44,8 @@ jobs:
         context: ./client
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/restauranty-client:latest
+        build-args: |
+          REACT_APP_SERVER_URL=${{ secrets.REACT_APP_SERVER_URL }}
 
   deploy:
     needs: build-push-images
@@ -60,6 +62,24 @@ jobs:
 
     - name: Update Kubeconfig
       run: aws eks update-kubeconfig --name ${{ secrets.EKS_CLUSTER_NAME }} --region ${{ secrets.AWS_REGION }}
+
+    - name: Generate Secrets
+      run: |
+        cat <<EOF > k8s/restauranty-secrets.yaml
+        apiVersion: v1
+        kind: Secret
+        metadata:
+          name: restauranty-secrets
+        type: Opaque
+        data:
+          mongodb-uri: ${{ secrets.MONGODB_URI_BASE64 }}
+          auth-secret: ${{ secrets.AUTH_SECRET_BASE64 }}
+          cloud-name: ${{ secrets.CLOUD_NAME_BASE64 }}
+          cloud-api-key: ${{ secrets.CLOUD_API_KEY_BASE64 }}
+          cloud-api-secret: ${{ secrets.CLOUD_API_SECRET_BASE64 }}
+          dockerhub-username: ${{ secrets.DOCKERHUB_USERNAME_BASE64 }}
+          REACT_APP_SERVER_URL: ${{ secrets.REACT_APP_SERVER_URL_BASE64 }}
+        EOF
 
     - name: Deploy to EKS
       run: |  
